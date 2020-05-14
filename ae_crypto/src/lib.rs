@@ -2,38 +2,38 @@
 //!
 //! `ae_crypto` contains some crypto utilities used in an Authentic Execution environment
 
-mod aead;
+mod aes;
 mod spongent;
 
 
 /// This enum which encryption types are supported
 #[derive(Debug)]
 pub enum Encryption {
-    Aead,
+    Aes,
     Spongent
 }
 
 impl Encryption {
     /// Converts from &str to Option<Encryption>
     /// the input string is converted to lowercase before checking
-    /// "aead"      : Encryption::Aead
+    /// "Aes"      : Encryption::Aes
     /// "spongent"  : Encryption::Spongent
     pub fn from_str(enc : &str) -> Option<Encryption> {
         let lower = enc.to_lowercase();
 
         match &*lower {
-            "aead"      => Some(Encryption::Aead),
+            "aes"      => Some(Encryption::Aes),
             "spongent"  => Some(Encryption::Spongent),
             _           => None
         }
     }
 
     /// Converts from u8 to Option<Encryption>
-    /// 0: Encryption::Aead
+    /// 0: Encryption::Aes
     /// 1: Encryption::Spongent
     pub fn from_u8(enc : u8) -> Option<Encryption> {
         match enc {
-            0           => Some(Encryption::Aead),
+            0           => Some(Encryption::Aes),
             1           => Some(Encryption::Spongent),
             _           => None
         }
@@ -62,7 +62,7 @@ impl std::fmt::Display for Error {
 /// where cipher has the same length of the plaintext, and mac is 16 bytes
 pub fn encrypt(plaintext : &[u8], key : &[u8], nonce : u16, data : &[u8], encryption : &Encryption) -> Result<Vec<u8>, Error> {
     match encryption {
-        Encryption::Aead => aead::encrypt(plaintext, key, nonce, data),
+        Encryption::Aes => aes::encrypt(plaintext, key, nonce, data),
         Encryption::Spongent => spongent::encrypt(plaintext, key, nonce, data),
     }
 }
@@ -74,7 +74,7 @@ pub fn encrypt(plaintext : &[u8], key : &[u8], nonce : u16, data : &[u8], encryp
 /// where cipher is the encrypted data
 pub fn decrypt(ciphertext : &[u8], key : &[u8], nonce : u16, data : &[u8], encryption : &Encryption) -> Result<Vec<u8>, Error> {
     match encryption {
-        Encryption::Aead => aead::decrypt(ciphertext, key, nonce, data),
+        Encryption::Aes => aes::decrypt(ciphertext, key, nonce, data),
         Encryption::Spongent => spongent::decrypt(ciphertext, key, nonce, data),
     }
 }
@@ -97,8 +97,8 @@ mod tests {
     }
 
     #[test]
-    fn test_aead() {
-        test_generic(Encryption::Aead, 16);
+    fn test_aes() {
+        test_generic(Encryption::Aes, 16);
     }
 
     #[test]

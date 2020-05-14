@@ -11,8 +11,8 @@ pub fn encrypt(plaintext : &[u8], key : &[u8], nonce : u16, data : &[u8]) -> Res
     let nonce = create_nonce(nonce);
     let nonce_arr = GenericArray::from_slice(&nonce);
 
-    let aead = AesGcm::new(key_arr);
-    match aead.encrypt(nonce_arr, Payload{msg : plaintext, aad : data}) {
+    let aes = AesGcm::new(key_arr);
+    match aes.encrypt(nonce_arr, Payload{msg : plaintext, aad : data}) {
         Ok(v) => Ok(v),
         Err(_) => Err(Error::EncryptionError)
     }
@@ -23,8 +23,8 @@ pub fn decrypt(ciphertext : &[u8], key : &[u8], nonce : u16, data : &[u8]) -> Re
     let nonce = create_nonce(nonce);
     let nonce_arr = GenericArray::from_slice(&nonce);
 
-    let aead = AesGcm::new(key_arr);
-    match aead.decrypt(nonce_arr, Payload{msg : ciphertext, aad : data}) {
+    let aes = AesGcm::new(key_arr);
+    match aes.decrypt(nonce_arr, Payload{msg : ciphertext, aad : data}) {
         Ok(v) => Ok(v),
         Err(_) => Err(Error::EncryptionError)
     }
