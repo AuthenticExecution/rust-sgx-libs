@@ -1,4 +1,4 @@
-# thesis-rust-libraries
+# rust-sgx-libs
 
 Utility rust libraries for my thesis work
 

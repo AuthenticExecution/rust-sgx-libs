@@ -8,4 +8,4 @@ edition = "2018"
 
 [dependencies]
 aes-gcm = "0.3.0"
-spongent = { git = "https://github.com/gianlu33/spongent-rs", branch = "fix-security"}
+spongent = { git = "https://github.com/gianlu33/spongent-rs", branch = "64-bits"}
