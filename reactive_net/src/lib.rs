@@ -1,6 +1,6 @@
-//! # network_lib
+//! # reactive_net
 //!
-//! `network_lib` contains some utilities to manage network connections in an Authentic Execution environment
+//! `reactive_net` contains some utilities to manage network connections in an Authentic Execution environment
 //! Messages are of three types: Message, Command, Result
 //! The general format of a message is the following: [<identifier><length><payload>]
 //! where `identifier` is different for each type, while the other fields are the same

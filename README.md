@@ -10,7 +10,7 @@ It is used by both Software Modules and the deployer (in `set_key_encryptor`).
 
 See library documentation for more details.
 
-## network_lib
+## reactive_net
 
 Rust library for network communications.
 
