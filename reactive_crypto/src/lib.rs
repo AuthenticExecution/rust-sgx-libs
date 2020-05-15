@@ -1,6 +1,6 @@
-//! # ae_crypto
+//! # reactive_crypto
 //!
-//! `ae_crypto` contains some crypto utilities used in an Authentic Execution environment
+//! `reactive_crypto` contains some crypto utilities used in an Authentic Execution environment
 
 mod aes;
 mod spongent;

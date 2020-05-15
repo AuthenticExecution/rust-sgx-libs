@@ -2,7 +2,7 @@
 
 Utility rust libraries for my thesis work
 
-## ae_crypto
+## reactive_crypto
 
 Rust library that contains functions for encrypting/decrypting data with/without associated data.
 
