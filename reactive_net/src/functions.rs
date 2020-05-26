@@ -109,15 +109,14 @@ pub fn write_result(stream : &mut TcpStream, result : &ResultMessage) -> Result<
 
 /// Read a CommandMessage from stream
 ///
-/// message format is: [command u16 - len u16 - payload]
+/// message format is: [command u8 - len u16 - payload]
 pub fn read_command(stream : &mut TcpStream) -> Result<CommandMessage, Error> {
-    let mut buf : [u8; 2] = [0; 2];
+    let mut buf : [u8; 1] = [0; 1];
     if let Err(_) = stream.read_exact(&mut buf) {
         return Err(Error::NetworkError);
     }
 
-    let code = bytes_to_u16(&buf);
-    let code = match CommandCode::from_u16(code) {
+    let code = match CommandCode::from_u8(buf[0]) {
         Some(c) => c,
         None    => return Err(Error::InvalidPayload)
     };
@@ -132,7 +131,7 @@ pub fn read_command(stream : &mut TcpStream) -> Result<CommandMessage, Error> {
 
 /// Write a CommandMessage to stream
 ///
-/// message format is: [command u16 - len u16 - payload]
+/// message format is: [command u8 - len u16 - payload]
 pub fn write_command(stream : &mut TcpStream, command : &CommandMessage) -> Result<(), Error> {
     let data = command.get_payload();
 
@@ -144,9 +143,9 @@ pub fn write_command(stream : &mut TcpStream, command : &CommandMessage) -> Resu
         None => 0
     };
 
-    let mut payload : Vec<u8> = Vec::with_capacity(payload_len as usize + 4);
+    let mut payload : Vec<u8> = Vec::with_capacity(payload_len as usize + 3);
 
-    payload.extend_from_slice(&command.get_code_u16().to_be_bytes());
+    payload.push(command.get_code_u8());
     payload.extend_from_slice(&payload_len.to_be_bytes());
 
     if payload_len != 0 {

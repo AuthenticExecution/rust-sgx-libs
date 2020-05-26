@@ -9,7 +9,7 @@ pub enum CommandCode {
 }
 
 impl CommandCode {
-    pub fn from_u16(value : u16) -> Option<CommandCode> {
+    pub fn from_u8(value : u8) -> Option<CommandCode> {
         match value {
             0 => Some(CommandCode::AddConnection),
             1 => Some(CommandCode::CallEntrypoint),
@@ -47,8 +47,8 @@ impl CommandMessage {
         &self.code
     }
 
-    pub fn get_code_u16(&self) -> u16 {
-        self.code as u16
+    pub fn get_code_u8(&self) -> u8 {
+        self.code as u8
     }
 
     pub fn get_payload(&self) -> Option<&[u8]> {
