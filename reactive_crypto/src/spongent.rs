@@ -40,7 +40,7 @@ pub fn decrypt(ciphertext : &[u8], key : &[u8], _nonce : u16, data : &[u8]) -> R
         return Err(Error::IllegalArguments)
     }
 
-    if c_len < sancus_security {
+    if c_len != ad_len + cipher_len + sancus_security {
         return Err(Error::IllegalArguments)
     }
 
