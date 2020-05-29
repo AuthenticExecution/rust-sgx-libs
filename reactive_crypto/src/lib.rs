@@ -56,26 +56,26 @@ impl std::fmt::Display for Error {
 }
 
 
-/// Encrypts `plaintext` using `key`, `nonce`, and `data`, with the chosen encryption type
+/// Encrypts `plaintext` using `key`, and `data`, with the chosen encryption type
 /// Returns Ok(ciphertext) if everything went well
 /// The return Vec will have the following format: [cipher - mac]
 /// where cipher has the same length of the plaintext, and mac is 16 bytes
-pub fn encrypt(plaintext : &[u8], key : &[u8], nonce : u16, data : &[u8], encryption : &Encryption) -> Result<Vec<u8>, Error> {
+pub fn encrypt(plaintext : &[u8], key : &[u8], data : &[u8], encryption : &Encryption) -> Result<Vec<u8>, Error> {
     match encryption {
-        Encryption::Aes => aes::encrypt(plaintext, key, nonce, data),
-        Encryption::Spongent => spongent::encrypt(plaintext, key, nonce, data),
+        Encryption::Aes => aes::encrypt(plaintext, key, data),
+        Encryption::Spongent => spongent::encrypt(plaintext, key, data),
     }
 }
 
 
-/// Decrypts `ciphertext` using `key`, `nonce`, and `data`, with the chosen encryption type
+/// Decrypts `ciphertext` using `key`, and `data`, with the chosen encryption type
 /// Returns Ok(plaintext) if everything went well
 /// `ciphertext` must have the format [cipher - mac]
 /// where cipher is the encrypted data
-pub fn decrypt(ciphertext : &[u8], key : &[u8], nonce : u16, data : &[u8], encryption : &Encryption) -> Result<Vec<u8>, Error> {
+pub fn decrypt(ciphertext : &[u8], key : &[u8], data : &[u8], encryption : &Encryption) -> Result<Vec<u8>, Error> {
     match encryption {
-        Encryption::Aes => aes::decrypt(ciphertext, key, nonce, data),
-        Encryption::Spongent => spongent::decrypt(ciphertext, key, nonce, data),
+        Encryption::Aes => aes::decrypt(ciphertext, key, data),
+        Encryption::Spongent => spongent::decrypt(ciphertext, key, data),
     }
 }
 
@@ -86,12 +86,11 @@ mod tests {
 
     fn test_generic(enc : Encryption, security_bytes : usize) {
         let key = b"16-bytes sec key";
-        let nonce : u16 = 0x1122;
         let plaintext = b"Hello world!";
-        let data = nonce.to_be_bytes();
+        let data = [1u8, 2u8];
 
-        let ciphertext = encrypt(plaintext, &key[..security_bytes], nonce, &data, &enc).unwrap();
-        let plaintext_dec = decrypt(&ciphertext, &key[..security_bytes], nonce, &data, &enc).unwrap();
+        let ciphertext = encrypt(plaintext, &key[..security_bytes], &data, &enc).unwrap();
+        let plaintext_dec = decrypt(&ciphertext, &key[..security_bytes], &data, &enc).unwrap();
 
         assert_eq!(plaintext, &plaintext_dec[..]);
     }

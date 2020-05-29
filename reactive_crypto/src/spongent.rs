@@ -4,7 +4,7 @@ use spongent::{spongent_wrap, spongent_unwrap};
 use crate::Error;
 
 
-pub fn encrypt(plaintext : &[u8], key : &[u8], _nonce : u16, data : &[u8]) -> Result<Vec<u8>, Error> {
+pub fn encrypt(plaintext : &[u8], key : &[u8], data : &[u8]) -> Result<Vec<u8>, Error> {
     let pl_len = plaintext.len();
     let sancus_security = key.len();
     let ad_len = data.len();
@@ -28,7 +28,7 @@ pub fn encrypt(plaintext : &[u8], key : &[u8], _nonce : u16, data : &[u8]) -> Re
     Ok(ciphertext)
 }
 
-pub fn decrypt(ciphertext : &[u8], key : &[u8], _nonce : u16, data : &[u8]) -> Result<Vec<u8>, Error> {
+pub fn decrypt(ciphertext : &[u8], key : &[u8], data : &[u8]) -> Result<Vec<u8>, Error> {
     let c_len = ciphertext.len();
     let sancus_security = key.len();
     let ad_len = data.len();
@@ -47,6 +47,11 @@ pub fn decrypt(ciphertext : &[u8], key : &[u8], _nonce : u16, data : &[u8]) -> R
     let ad = &ciphertext[..ad_len];
     let cipher = &ciphertext[ad_len..ad_len + cipher_len];
     let mac = &ciphertext[ad_len + cipher_len..];
+
+    if ad != data {
+        // this to avoid potential replay attacks.
+        return Err(Error::IllegalArguments)
+    }
 
     let mut plaintext : Vec<u8> = Vec::with_capacity(cipher_len);
     plaintext.extend_from_slice(cipher);
