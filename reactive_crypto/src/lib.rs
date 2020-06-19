@@ -45,7 +45,8 @@ pub enum Error {
     EncryptionError,
     InternalError,
     NotImplemented,
-    IllegalArguments
+    IllegalArguments,
+    KeySizeError
 }
 
 impl std::fmt::Display for Error {
