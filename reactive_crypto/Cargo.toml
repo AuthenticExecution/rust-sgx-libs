@@ -10,4 +10,4 @@ edition = "2018"
 aes-gcm = "0.5.0"
 
 # use master branch if you want 128 bits of security
-spongent = { git = "https://github.com/gianlu33/spongent-rs", branch = "64-bits"}
+spongent = { git = "https://github.com/gianlu33/spongent-rs"}
