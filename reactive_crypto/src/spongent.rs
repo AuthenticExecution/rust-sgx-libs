@@ -35,7 +35,7 @@ pub fn decrypt(ciphertext : &[u8], key : &[u8], data : &[u8]) -> Result<Vec<u8>,
     if c_len < sancus_security {
         return Err(Error::KeySizeError)
     }
-    
+
     let cipher_len = c_len - sancus_security;
 
     //TODO: the decrypting function panics if plaintext and data are not multiple of 2 bytes
@@ -52,7 +52,7 @@ pub fn decrypt(ciphertext : &[u8], key : &[u8], data : &[u8]) -> Result<Vec<u8>,
     match spongent_unwrap(key, data, cipher, mac, &mut plaintext) {
         Ok(_) =>  Ok(plaintext),
         Err(e) => {
-            println!("{:?}", e);
+            eprintln!("{:?}", e);
             Err(Error::EncryptionError)
         }
     }
