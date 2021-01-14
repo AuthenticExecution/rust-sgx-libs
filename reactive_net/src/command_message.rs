@@ -6,7 +6,8 @@ pub enum CommandCode {
     LoadSM,
     Ping,
     RegisterEntrypoint,
-    ModuleOutput
+    ModuleOutput,
+    RemoteRequest
 }
 
 impl CommandCode {
@@ -19,6 +20,7 @@ impl CommandCode {
             4 => Some(CommandCode::Ping),
             5 => Some(CommandCode::RegisterEntrypoint),
             6 => Some(CommandCode::ModuleOutput),
+            7 => Some(CommandCode::RemoteRequest),
             _ => None
         }
     }
