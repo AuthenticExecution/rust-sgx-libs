@@ -29,3 +29,21 @@ impl std::fmt::Display for Error {
             write!(f, "{:?}", self)
         }
 }
+
+pub enum EntrypointID {
+    SetKey,
+    HandleInput,
+    HandleHandler,
+    UserDefined
+}
+
+impl EntrypointID {
+    pub fn from_u16(value : u16) -> EntrypointID {
+        match value {
+            0 => EntrypointID::SetKey,
+            1 => EntrypointID::HandleInput,
+            2 => EntrypointID::HandleHandler,
+            _ => EntrypointID::UserDefined
+        }
+    }
+}
