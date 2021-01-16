@@ -7,7 +7,7 @@ mod spongent;
 
 
 /// This enum which encryption types are supported
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum Encryption {
     Aes,
     Spongent
