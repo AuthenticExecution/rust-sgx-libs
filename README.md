@@ -4,9 +4,9 @@ Utility rust libraries for my thesis work
 
 ## reactive_crypto
 
-Rust library that contains functions for encrypting/decrypting data with/without associated data.
+Rust library that contains functions for authenticated encryption. Supports: AES, SPONGENT.
 
-It is used by both Software Modules and the deployer (in `set_key_encryptor`).
+It is used by both Software Modules and the deployer (in `aes_encryptor`).
 
 See library documentation for more details.
 
