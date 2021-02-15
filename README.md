@@ -6,8 +6,6 @@ Utility rust libraries for my thesis work
 
 Rust library that contains functions for authenticated encryption. Supports: AES, SPONGENT.
 
-It is used by both Software Modules and the deployer (in `aes_encryptor`).
-
 See library documentation for more details.
 
 ## reactive_net
