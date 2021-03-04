@@ -6,6 +6,7 @@ pub enum ResultCode {
     InternalError,
     BadRequest,
     CryptoError,
+    NotAttestedYet,
     GenericError
 }
 
@@ -18,6 +19,7 @@ impl ResultCode {
             3 => ResultCode::InternalError,
             4 => ResultCode::BadRequest,
             5 => ResultCode::CryptoError,
+            6 => ResultCode::NotAttestedYet,
             _ => ResultCode::GenericError
         }
     }
