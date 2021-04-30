@@ -32,6 +32,7 @@ impl std::fmt::Display for Error {
 
 pub enum EntrypointID {
     SetKey,
+    Attest,
     HandleInput,
     HandleHandler,
     UserDefined
@@ -41,8 +42,9 @@ impl EntrypointID {
     pub fn from_u16(value : u16) -> EntrypointID {
         match value {
             0 => EntrypointID::SetKey,
-            1 => EntrypointID::HandleInput,
-            2 => EntrypointID::HandleHandler,
+            1 => EntrypointID::Attest,
+            2 => EntrypointID::HandleInput,
+            3 => EntrypointID::HandleHandler,
             _ => EntrypointID::UserDefined
         }
     }
