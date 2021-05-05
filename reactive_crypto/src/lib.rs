@@ -56,6 +56,7 @@ impl std::fmt::Display for Error {
         }
 }
 
+impl std::error::Error for Error {}
 
 /// Encrypts `plaintext` using `key`, and `data`, with the chosen encryption type
 /// Returns Ok(ciphertext) if everything went well
