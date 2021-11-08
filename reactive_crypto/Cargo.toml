@@ -9,5 +9,5 @@ edition = "2018"
 [dependencies]
 aes-gcm = "0.9.3"
 
-# use master branch if you want 128 bits of security
-spongent = { git = "https://github.com/gianlu33/spongent-rs"}
+# use "64-bits" branch if you want 64 bits of security
+spongent = { git = "https://github.com/AuthenticExecution/spongent-rs"}
