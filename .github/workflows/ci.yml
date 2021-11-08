@@ -1,0 +1,21 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch: # Allow manual triggering
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    -
+      uses: actions/checkout@master
+    -
+      name: reactive_crypto check
+      run: cargo check --manifest-path reactive_crypto/Cargo.toml
+    -
+      name: reactive_net check
+      run: cargo check --manifest-path reactive_net/Cargo.toml
