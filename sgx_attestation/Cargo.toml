@@ -1,0 +1,26 @@
+[package]
+name = "sgx_attestation"
+version = "0.1.0"
+authors = ["Gianluca Scopelliti <gianluca.scopelliti@ericsson.com>"]
+edition = "2018"
+resolver = "2"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+client = ["ra-client"]
+sp = ["ra-sp"]
+enclave = ["ra-enclave"]
+client_verbose = ["ra-client/verbose"]
+sp_verbose = ["ra-sp/verbose"]
+enclave_verbose = ["ra-enclave/verbose"]
+
+[dependencies]
+anyhow = "1.0.40"
+sgxs = "0.7.2"
+serde_json = "1.0"
+
+ra-client = { git = "https://github.com/AuthenticExecution/rust-sgx-remote-attestation.git", optional = true }
+ra-sp = { git = "https://github.com/AuthenticExecution/rust-sgx-remote-attestation.git", optional = true }
+ra-enclave = { git = "https://github.com/AuthenticExecution/rust-sgx-remote-attestation.git", optional = true }
+sgx-crypto = { git = "https://github.com/AuthenticExecution/rust-sgx-remote-attestation.git"}

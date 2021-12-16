@@ -18,6 +18,12 @@ It handles the communication between:
 - the Deployer and an Event Manager
 - two Event Managers
 
+## sgx_attestation
+
+Rust library that wraps around [rust-sgx-remote-attestation](https://github.com/AuthenticExecution/rust-sgx-remote-attestation)
+
+It has optional features for the enclave, SP (challenger), and client (AESM client).
+
 ### Messages types
 
 **message**
