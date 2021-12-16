@@ -14,6 +14,8 @@ pub use sp::*;
 pub use enclave::*;
 pub use error::*;
 
+pub use sgx_crypto;
+
 #[cfg(any(feature = "client", feature = "sp"))]
 const MAX_HOST_SIZE : usize = 256;
 
