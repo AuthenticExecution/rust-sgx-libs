@@ -14,7 +14,7 @@ pub use sp::*;
 pub use enclave::*;
 pub use error::*;
 
-#[cfg(not(feature = "enclave"))]
+#[cfg(any(feature = "client", feature = "sp"))]
 const MAX_HOST_SIZE : usize = 256;
 
 //TODO documentation
