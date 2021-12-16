@@ -7,6 +7,9 @@ on:
   workflow_dispatch: # Allow manual triggering
   pull_request:
 
+env:
+  ADMIN_IMAGE: authexec/reactive-tools:latest
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,3 +22,13 @@ jobs:
     -
       name: reactive_net check
       run: cargo check --manifest-path reactive_net/Cargo.toml
+    -
+      name: sgx_attestation check
+      run: |
+        docker pull ${{ env.ADMIN_IMAGE }}
+        shopt -s expand_aliases
+        alias CHECK="docker run --rm -v $(pwd)/sgx_attestation:/usr/src/app/ ${{ env.ADMIN_IMAGE }} cargo check"
+        CHECK --features=client,client_verbose
+        CHECK --features=sp,sp_verbose
+        CHECK --target=x86_64-fortanix-unknown-sgx --features=enclave,enclave_verbose
+        unalias CHECK
