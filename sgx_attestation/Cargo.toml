@@ -17,7 +17,7 @@ enclave_verbose = ["ra-enclave/verbose"]
 
 [dependencies]
 anyhow = "1.0.40"
-sgxs = "0.7.2"
+sgxs = "0.7.3"
 serde_json = "1.0"
 
 ra-client = { git = "https://github.com/AuthenticExecution/rust-sgx-remote-attestation.git", optional = true }
