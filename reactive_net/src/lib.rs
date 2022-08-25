@@ -35,7 +35,7 @@ impl std::error::Error for Error {}
 pub enum EntrypointID {
     SetKey,
     Attest,
-    Exit,
+    Disable,
     HandleInput,
     HandleHandler,
     UserDefined
@@ -46,7 +46,7 @@ impl EntrypointID {
         match value {
             0 => EntrypointID::SetKey,
             1 => EntrypointID::Attest,
-            2 => EntrypointID::Exit,
+            2 => EntrypointID::Disable,
             3 => EntrypointID::HandleInput,
             4 => EntrypointID::HandleHandler,
             _ => EntrypointID::UserDefined
