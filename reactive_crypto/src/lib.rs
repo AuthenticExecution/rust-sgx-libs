@@ -86,24 +86,24 @@ pub fn decrypt(ciphertext : &[u8], key : &[u8], data : &[u8], encryption : &Encr
 mod tests {
     use super::{Encryption, encrypt, decrypt};
 
-    fn test_generic(enc : Encryption, security_bytes : usize) {
+    fn test_generic(enc : Encryption) {
         let key = b"16-bytes sec key";
         let plaintext = b"Hello world!";
         let data = [1u8, 2u8];
 
-        let ciphertext = encrypt(plaintext, &key[..security_bytes], &data, &enc).unwrap();
-        let plaintext_dec = decrypt(&ciphertext, &key[..security_bytes], &data, &enc).unwrap();
+        let ciphertext = encrypt(plaintext, &key[..], &data, &enc).unwrap();
+        let plaintext_dec = decrypt(&ciphertext, &key[..], &data, &enc).unwrap();
 
         assert_eq!(plaintext, &plaintext_dec[..]);
     }
 
     #[test]
     fn test_aes() {
-        test_generic(Encryption::Aes, 16);
+        test_generic(Encryption::Aes);
     }
 
     #[test]
     fn test_spongent() {
-        test_generic(Encryption::Spongent, 8);
+        test_generic(Encryption::Spongent);
     }
 }

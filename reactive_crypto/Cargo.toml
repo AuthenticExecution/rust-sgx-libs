@@ -10,4 +10,4 @@ edition = "2018"
 aes-gcm = "0.9.3"
 
 # use "64-bits" branch if you want 64 bits of security
-spongent = { git = "https://github.com/AuthenticExecution/spongent-rs"}
+spongent_cpp_rs = { git = "https://github.com/AuthenticExecution/spongent-cpp-rs"}

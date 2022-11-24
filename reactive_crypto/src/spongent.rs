@@ -1,6 +1,6 @@
-extern crate spongent;
+extern crate spongent_cpp_rs;
 
-use spongent::{spongent_wrap, spongent_unwrap};
+use spongent_cpp_rs::{spongent_wrap, spongent_unwrap, SpongentResult};
 use crate::Error;
 
 
@@ -14,17 +14,18 @@ pub fn encrypt(plaintext : &[u8], key : &[u8], data : &[u8]) -> Result<Vec<u8>, 
         return Err(Error::IllegalArguments)
     }
 
-    let mut ciphertext : Vec<u8> = Vec::with_capacity(pl_len + sancus_security);
-    ciphertext.extend_from_slice(plaintext);
+    let mut ciphertext = vec![0u8; pl_len];
+    let mut mac = vec![0u8; sancus_security];
 
-    let mac = match spongent_wrap(key, data, plaintext, &mut ciphertext, false) {
-        Ok(m) => m,
-        Err(_) => return Err(Error::EncryptionError)
-    };
-
-    ciphertext.extend_from_slice(&mac);
-
-    Ok(ciphertext)
+    match spongent_wrap(key, data, plaintext, &mut ciphertext, &mut mac) {
+        SpongentResult::Success => {
+            ciphertext.extend_from_slice(&mac);
+            Ok(ciphertext)
+        },
+        _                       => {
+            Err(Error::EncryptionError)
+        }
+    }
 }
 
 pub fn decrypt(ciphertext : &[u8], key : &[u8], data : &[u8]) -> Result<Vec<u8>, Error> {
@@ -46,13 +47,13 @@ pub fn decrypt(ciphertext : &[u8], key : &[u8], data : &[u8]) -> Result<Vec<u8>,
     let cipher = &ciphertext[..cipher_len];
     let mac = &ciphertext[cipher_len..];
 
-    let mut plaintext : Vec<u8> = Vec::with_capacity(cipher_len);
-    plaintext.extend_from_slice(cipher);
+    let mut plaintext : Vec<u8> = vec![0u8; cipher_len];
 
-    match spongent_unwrap(key, data, cipher, mac, &mut plaintext) {
-        Ok(_) =>  Ok(plaintext),
-        Err(e) => {
-            eprintln!("{:?}", e);
+    match spongent_unwrap(key, data, cipher, &mut plaintext, mac) {
+        SpongentResult::Success => {
+            Ok(plaintext)
+        },
+        _                       => {
             Err(Error::EncryptionError)
         }
     }
